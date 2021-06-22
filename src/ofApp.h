@@ -38,7 +38,12 @@ class ofApp : public ofBaseApp{
     vector<ofxDatGuiComponent*> plotter_components;
     ofxDatGuiValuePlotter* plotters[8];
     ofxDatGuiButton* myButton;
+    ofxDatGuiButton* returnButton;
 
     ofSoundPlayer button_sound;
     ofSoundPlayer ok_sound;
+
+    ofVideoGrabber vidGrabber;
+    int camWidth = 640;
+    int camHeight = 480;
 };
