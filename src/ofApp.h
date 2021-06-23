@@ -2,12 +2,15 @@
 
 #include "ofMain.h"
 #include "ofxDatGui.h"
+#include "ofxNetwork.h"
 
 class ofApp : public ofBaseApp{
 	public:
 		void setup();
 		void update();
 		void draw();
+
+    void drawStar(int x, int y, int r);
 		
 		void keyPressed(int key);
 		void keyReleased(int key);
@@ -26,13 +29,25 @@ class ofApp : public ofBaseApp{
     const int logo_height = 160;
     const int x_offset = logo_width / 2;
     const int y_offset = logo_height / 2;
+    const int button_width = 300;
+    const int button_height = 80;
     const int button_y_padding = 100;
+    const int camera_device_id = 0;
+    const int camera_width = 320;
+    const int camera_height = 240;
+    const int plotter_width = 260;
+    const int plotter_label_width = 80;
+    const int threshold = 900;
     int app_state = 0;
+    bool is_tokimeki = false;
 
+    int button_labels_size, sensor_labels_size;
 
     ofImage logo_image;
     ofImage kobe_image;
-    ofTrueTypeFont verdana;
+    ofImage boy_image;
+    vector<ofImage> photos;
+    ofTrueTypeFont text_font;
     ofxDatGuiComponent* component;
     vector<ofxDatGuiComponent*> components;
     vector<ofxDatGuiComponent*> plotter_components;
@@ -42,8 +57,8 @@ class ofApp : public ofBaseApp{
 
     ofSoundPlayer button_sound;
     ofSoundPlayer ok_sound;
-
+    ofSoundPlayer tokimeki_sound;
     ofVideoGrabber vidGrabber;
-    int camWidth = 640;
-    int camHeight = 480;
+
+    ofxUDPManager udpConnection;
 };

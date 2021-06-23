@@ -807,7 +807,14 @@ obj/osx/Release/src/main.o: \
   /Users/Hiroki/Documents/of_v0.11.2_osx_release/addons/ofxDatGui/src/components/ofxDatGuiMatrix.h \
   /Users/Hiroki/Documents/of_v0.11.2_osx_release/addons/ofxDatGui/src/components/ofxDatGuiTimeGraph.h \
   /Users/Hiroki/Documents/of_v0.11.2_osx_release/addons/ofxDatGui/src/components/ofxDatGuiScrollView.h \
-  /Users/Hiroki/Documents/of_v0.11.2_osx_release/addons/ofxDatGui/src/components/ofxDatGuiControls.h
+  /Users/Hiroki/Documents/of_v0.11.2_osx_release/addons/ofxDatGui/src/components/ofxDatGuiControls.h \
+  /Users/Hiroki/Documents/of_v0.11.2_osx_release/addons/ofxNetwork/src/ofxNetwork.h \
+  /Users/Hiroki/Documents/of_v0.11.2_osx_release/addons/ofxNetwork/src/ofxTCPClient.h \
+  /Users/Hiroki/Documents/of_v0.11.2_osx_release/addons/ofxNetwork/src/ofxTCPManager.h \
+  /Users/Hiroki/Documents/of_v0.11.2_osx_release/addons/ofxNetwork/src/ofxTCPSettings.h \
+  /Users/Hiroki/Documents/of_v0.11.2_osx_release/addons/ofxNetwork/src/ofxTCPServer.h \
+  /Users/Hiroki/Documents/of_v0.11.2_osx_release/addons/ofxNetwork/src/ofxUDPManager.h \
+  /Users/Hiroki/Documents/of_v0.11.2_osx_release/addons/ofxNetwork/src/ofxUDPSettings.h
 
 /Users/Hiroki/Documents/of_v0.11.2_osx_release/libs/openFrameworks/ofMain.h:
 
@@ -2424,3 +2431,17 @@ obj/osx/Release/src/main.o: \
 /Users/Hiroki/Documents/of_v0.11.2_osx_release/addons/ofxDatGui/src/components/ofxDatGuiScrollView.h:
 
 /Users/Hiroki/Documents/of_v0.11.2_osx_release/addons/ofxDatGui/src/components/ofxDatGuiControls.h:
+
+/Users/Hiroki/Documents/of_v0.11.2_osx_release/addons/ofxNetwork/src/ofxNetwork.h:
+
+/Users/Hiroki/Documents/of_v0.11.2_osx_release/addons/ofxNetwork/src/ofxTCPClient.h:
+
+/Users/Hiroki/Documents/of_v0.11.2_osx_release/addons/ofxNetwork/src/ofxTCPManager.h:
+
+/Users/Hiroki/Documents/of_v0.11.2_osx_release/addons/ofxNetwork/src/ofxTCPSettings.h:
+
+/Users/Hiroki/Documents/of_v0.11.2_osx_release/addons/ofxNetwork/src/ofxTCPServer.h:
+
+/Users/Hiroki/Documents/of_v0.11.2_osx_release/addons/ofxNetwork/src/ofxUDPManager.h:
+
+/Users/Hiroki/Documents/of_v0.11.2_osx_release/addons/ofxNetwork/src/ofxUDPSettings.h:
