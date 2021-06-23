@@ -32,10 +32,10 @@ class ofApp : public ofBaseApp{
     const int button_width = 300;
     const int button_height = 80;
     const int button_y_padding = 100;
-    const int camera_device_id = 0;
-    const int camera_width = 320;
-    const int camera_height = 240;
-    const int plotter_width = 260;
+    const int camera_device_id = 1;
+    const int camera_width = 240;
+    const int camera_height = 360;
+    const int plotter_width = 240;
     const int plotter_label_width = 80;
     const int threshold = 900;
     int app_state = 0;
@@ -61,4 +61,5 @@ class ofApp : public ofBaseApp{
     ofVideoGrabber vidGrabber;
 
     ofxUDPManager udpConnection;
+    ofSerial serial;
 };

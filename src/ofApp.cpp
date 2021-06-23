@@ -2,8 +2,9 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-
+  //左足ポート：50001 右足ポート：50002
   ofSetWindowTitle("TOKIMEKI Visualizer");
+  ofSetFrameRate(30);
 
   ofDirectory dir("photos");
   dir.allowExt("jpg");
@@ -25,15 +26,15 @@ void ofApp::setup(){
 
   udpConnection.Create();
   udpConnection.SetEnableBroadcast(true);
-  //udpConnection.Connect("10.32.130.100", 50002);
-  //udpConnection.Bind(50002);
-  udpConnection.BindMcast("10.32.130.100", 50002);
+  //udpConnection.Bind(50008);
+  udpConnection.BindMcast("10.32.130.100", 50008);
   udpConnection.SetNonBlocking(true);
 
   ofBackground(188, 226, 232);
 
-  vidGrabber.setVerbose(true);
+  //vidGrabber.setVerbose(true);
   vidGrabber.setDeviceID(camera_device_id);
+  vidGrabber.listDevices();
   vidGrabber.initGrabber(camera_width, camera_height);
 
   string button_labels[] = {"START", "GALLERY", "EXIT"};
@@ -68,7 +69,7 @@ void ofApp::setup(){
   sensor_labels_size = sizeof(sensor_labels) / sizeof(sensor_labels[0]);
   for (int i = 0; i < sensor_labels_size; ++i) {
     string label = sensor_labels[i];
-    plotters[i] = new ofxDatGuiValuePlotter(label, 0, 1000);
+    plotters[i] = new ofxDatGuiValuePlotter(label, 0, 250);
     plotters[i]->setDrawMode(ofxDatGuiGraph::LINES);
     plotters[i]->setSpeed(3);
     component = plotters[i];
@@ -110,8 +111,6 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-  char udpMessage[100000];
-    cout << udpConnection.Receive(udpMessage,100000) << endl;
 
   if (app_state == 0) {
     //Menu
@@ -119,10 +118,38 @@ void ofApp::update(){
 
   } else if (app_state == 1) {
     //Visualizer
+    int current_right_foot_r = 0;
+    int current_right_foot_l = 0;
+    int current_right_foot_b = 0;
+    char udpMessage[100000];
+    udpConnection.Receive(udpMessage,100000);
+    string message=udpMessage;
+    if(message!=""){
+      for (int i = 0; i < 3; ++i) {
+        if (i == 0){
+          int row_r = ofBinaryToInt(ofToBinary(message[i]));
+          current_right_foot_r = ofMap(row_r, 250, 0, 0, 250); 
+        } else if (i == 1) { 
+          int row_l = ofBinaryToInt(ofToBinary(message[i]));
+          current_right_foot_l = ofMap(row_l, 250, 0, 0, 250); 
+        } else if(i == 2){
+          int row_b = ofBinaryToInt(ofToBinary(message[i]));
+          current_right_foot_b = ofMap(row_b, 250, 0, 0, 250); 
+        }
+      }
+    }
     vidGrabber.update();
     for (int i = 0; i < plotter_components.size(); ++i) {
-      float current_value = ofRandom(0, 1000);
-      plotters[i]->setValue(current_value);
+      if (i != 2 && i != 3) {
+        float current_value = ofRandom(0, 1000);
+        plotters[i]->setValue(current_value);
+      } else {
+        if (i == 2) {
+          plotters[i]->setValue(current_right_foot_r);
+        } else if (i == 3) {
+          plotters[i]->setValue(current_right_foot_b);
+        }
+      }
       plotter_components[i]->update();
     } 
     returnButton->update();
@@ -144,10 +171,7 @@ void ofApp::draw(){
     kobe_image.draw(0, 0, window_width, window_height);
     logo_image.draw(window_width / 2 - x_offset, window_height / 4 - y_offset, logo_width, logo_height);
     for (int i = 0; i < components.size(); ++i) components[i]->draw();
-
     
-  //左足ポート：50001
-  //右足ポート：50002
   //Visualizer
   } else if(app_state == 1) {
     ofBackground(188, 226, 232);
@@ -166,9 +190,9 @@ void ofApp::draw(){
     ofSetColor(255);
     boy_image.draw(window_width / 3 - boy_image.getWidth() / 2, window_height / 2 - boy_image.getHeight() / 4, boy_image.getWidth()/2, boy_image.getHeight()/2);
     ofSetColor(0);
-    text_font.drawString("TOKIMEKI VISION", window_width*2/3 - 320 / 2, window_height / 5);
+    text_font.drawString("TOKIMEKI VISION", window_width*2/3 - 320 / 2, window_height / 6);
     ofSetColor(255);
-    vidGrabber.draw(window_width*2/3 - 140, window_height / 2 - 240 / 2);
+    vidGrabber.draw(window_width/3, window_height/5);
 
     ofSetColor(100, 0, 0);
     ofDrawLine(20, 20, 280, 320);
@@ -193,9 +217,9 @@ void ofApp::draw(){
     ofSetColor(255);
     for (int i = 0; i < photos.size(); ++i) {
       if (i < 4) {
-        photos[i].draw(i * 220, 80);
+        photos[i].draw(i * 220 + 20, 80);
       } else {
-        photos[i].draw((i%4) * 220, 280);
+        photos[i].draw((i%4) * 220 + 20, 300);
       }
     }
     returnButton->draw();
