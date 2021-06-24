@@ -121,7 +121,13 @@ void ofApp::update(){
       udpConnection[i].Receive(udpMessage, 255);
       string message=udpMessage;
       int row_data = ofBinaryToInt(ofToBinary(message));
-      if (row_data) plotters[i]->setValue(row_data);
+      int fixed_value = 0;
+      if (i == 6) {
+        fixed_value = ofMap(row_data, -90, 90, 0, 250);
+      } else {
+        fixed_value = ofMap(row_data, 250, 0, 0, 250);
+      }
+      if (row_data) plotters[i]->setValue(fixed_value);
       plotter_components[i]->update();
     }
 
@@ -168,7 +174,13 @@ void ofApp::update(){
       udpConnection[i].Receive(udpMessage, 255);
       string message=udpMessage;
       int row_data = ofBinaryToInt(ofToBinary(message));
-      if (row_data) no_cam_plotters[i]->setValue(row_data);
+      int fixed_value = 0;
+      if (i == 6) {
+        fixed_value = ofMap(row_data, -90, 90, 0, 250);
+      } else {
+        fixed_value = ofMap(row_data, 250, 0, 0, 250);
+      }
+      if (row_data) no_cam_plotters[i]->setValue(fixed_value);
       no_cam_plotter_components[i]->update();
     }
   }
