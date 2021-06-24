@@ -36,6 +36,7 @@ class ofApp : public ofBaseApp{
     const int logo_height = 160;
     const int x_offset = logo_width / 2;
     const int y_offset = logo_height / 2;
+
     const int button_width = 360;
     const int button_height = 80;
     const int button_y_padding = 100;
@@ -53,7 +54,8 @@ class ofApp : public ofBaseApp{
     const int sensor_max_value = 250;
     const int threshold = 200;
 
-    const int right_fp_port = 50008;
+    const int R_port = 50004;
+
 
     int app_state = 0;
     bool is_tokimeki = false;
@@ -70,7 +72,9 @@ class ofApp : public ofBaseApp{
     ofxDatGuiComponent* component;
     vector<ofxDatGuiComponent*> components;
     vector<ofxDatGuiComponent*> plotter_components;
+    vector<ofxDatGuiComponent*> no_cam_plotter_components;
     ofxDatGuiValuePlotter* plotters[8];
+    ofxDatGuiValuePlotter* no_cam_plotters[8];
     ofxDatGuiButton* myButton;
 
     ofSoundPlayer button_sound;
@@ -79,9 +83,8 @@ class ofApp : public ofBaseApp{
     ofSoundPlayer cancel_sound;
     ofVideoGrabber vidGrabber;
 
-    ofxUDPManager udpConnection;
+    ofxUDPManager udpConnection[7];
 
     void drawStar(int x, int y, int r);
     void drawTokimeki();
-    void initUdp(ofxUDPManager udpObj, int port); 
 };
