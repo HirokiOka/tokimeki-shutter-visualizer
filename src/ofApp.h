@@ -54,8 +54,6 @@ class ofApp : public ofBaseApp{
     const int sensor_max_value = 250;
     const int threshold = 200;
 
-    const int R_port = 50004;
-
 
     int app_state = 0;
     bool is_tokimeki = false;

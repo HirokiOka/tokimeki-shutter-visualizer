@@ -49,7 +49,7 @@ void ofApp::setup(){
   }
 
   //plotter settings
-  string sensor_labels[] = {"LFP_outside", "LFP_inside", "LFP_back", "RFP_outside", "RFP_inside", "RFP_back", "HORIZONTAL"};
+  string sensor_labels[] = {"LFP_outside", "LFP_inside", "LFP_back", "RFP_outside", "RFP_inside", "RFP_back", "roll"};
   sensor_labels_size = sizeof(sensor_labels) / sizeof(sensor_labels[0]);
   for (int i = 0; i < sensor_labels_size; ++i) {
     string label = sensor_labels[i];
@@ -104,7 +104,6 @@ void ofApp::setup(){
     component->setWidth(plotter_width, plotter_label_width);
     no_cam_plotter_components.push_back(component);
   }
-
 }
 
 //--------------------------------------------------------------
@@ -118,26 +117,20 @@ void ofApp::update(){
 
     for (int i = 0; i < 7; ++i) {
       char udpMessage[255];
-      udpConnection[i].Receive(udpMessage, 255);
-      string message=udpMessage;
-      int row_data = ofBinaryToInt(ofToBinary(message));
-      int fixed_value = 0;
-      if (i == 6) {
-        fixed_value = ofMap(row_data, -90, 90, 0, 250);
-      } else {
-        fixed_value = ofMap(row_data, 250, 0, 0, 250);
+        udpConnection[i].Receive(udpMessage, 255);
+        string message=udpMessage;
+        int row_data = ofBinaryToInt(ofToBinary(message));
+        int fixed_value = 0;
+        if (i == 6) {
+          fixed_value = ofMap(row_data, -180, 180, 0, 250);
+          fixed_value = row_data; 
+        } else {
+          fixed_value = ofMap(row_data, 250, 0, 0, 250);
+        }
+        if (row_data) plotters[i]->setValue(fixed_value);
+        plotter_components[i]->update();
       }
-      if (row_data) plotters[i]->setValue(fixed_value);
-      plotter_components[i]->update();
-    }
 
-    /*
-    for (int i = 0; i < plotter_components.size(); ++i) {
-      //float current_value = ofRandom(0, 250);
-      plotters[i]->setValue(current_value);
-      plotter_components[i]->update();
-    } 
-    */
     vidGrabber.update();
     components[3]->update();
 
@@ -162,13 +155,6 @@ void ofApp::update(){
 
   } else if (app_state == 3) {
     //NOCAM
-    /*
-    for (int i = 0; i < plotter_components.size(); ++i) {
-      float current_value = ofRandom(0, 1000);
-      plotters[i]->setValue(current_value);
-      plotter_components[i]->update();
-    } 
-    */
     for (int i = 0; i < 7; ++i) {
       char udpMessage[255];
       udpConnection[i].Receive(udpMessage, 255);
@@ -176,7 +162,7 @@ void ofApp::update(){
       int row_data = ofBinaryToInt(ofToBinary(message));
       int fixed_value = 0;
       if (i == 6) {
-        fixed_value = ofMap(row_data, -90, 90, 0, 250);
+        fixed_value = ofMap(row_data, -180, 180, 0, 250);
       } else {
         fixed_value = ofMap(row_data, 250, 0, 0, 250);
       }
@@ -251,6 +237,8 @@ void ofApp::draw(){
   } else if (app_state == 3) {
     //NOCAM
     ofBackground(188, 226, 232);
+    ofSetColor(0);
+    text_font.drawString("TOKIMEKI SHUTTER", window_width/2 - 200, window_height / 7);
     ofSetColor(255);
 
     boy_image.draw(window_width / 2 - boy_image.getWidth() / 2, window_height / 2 - boy_image.getHeight() / 2);
@@ -265,7 +253,7 @@ void ofApp::draw(){
     ofDrawLine(20, 20, boy_head_x, boy_head_y);
 
     for (int i = 0; i < plotter_components.size(); ++i) {
-      plotter_components[i]->draw();
+      no_cam_plotter_components[i]->draw();
     }
     components[3]->draw();
   }
