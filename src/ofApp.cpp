@@ -97,8 +97,8 @@ void ofApp::setup(){
       pos_y = ofGetHeight() - 220 + (i - 3) * 70;
     } else {
       //Head
-      pos_x = 20;
-      pos_y = 20;
+      pos_x = ofGetWidth() / 2;
+      pos_y = 40;
     }
     component->setPosition(pos_x, pos_y);
     component->setWidth(plotter_width, plotter_label_width);
@@ -238,7 +238,7 @@ void ofApp::draw(){
     //NOCAM
     ofBackground(188, 226, 232);
     ofSetColor(0);
-    text_font.drawString("TOKIMEKI SHUTTER", window_width/2 - 200, window_height / 7);
+    text_font.drawString("TOKIMEKI SHUTTER", 40, 40);
     ofSetColor(255);
 
     boy_image.draw(window_width / 2 - boy_image.getWidth() / 2, window_height / 2 - boy_image.getHeight() / 2);
@@ -249,8 +249,6 @@ void ofApp::draw(){
     float boy_lfoot_x = boy_head_x + 60;
     float boy_foot_y = window_height / 2 + boy_image.getHeight() / 6;
 
-    ofSetColor(100, 0, 0);
-    ofDrawLine(20, 20, boy_head_x, boy_head_y);
 
     for (int i = 0; i < plotter_components.size(); ++i) {
       no_cam_plotter_components[i]->draw();
