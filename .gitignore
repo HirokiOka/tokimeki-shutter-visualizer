@@ -1,5 +1,5 @@
 bin/
-Makefile/
+Makefile
 .DS_Store
 Project.xcconfig
 addons.make
